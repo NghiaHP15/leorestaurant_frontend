@@ -1,0 +1,12 @@
+.information::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 55%;
+  background-color: var(--primary);
+  z-index: 1;
+  border-top-right-radius: 0.75rem;
+  border-top-left-radius: 0.75rem;
+}

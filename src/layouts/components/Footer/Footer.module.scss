@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+And+White+Picture&family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto+Condensed:wght@300;400;500;600;700&display=swap");
+
+.footer-main {
+  margin-top: 60px;
+  padding: 60px 0 30px;
+  background-color: var(--text-color-1);
+  color: var(--white);
+  a {
+    color: var(--white);
+    text-decoration: none;
+    font-family: "Roboto Condensed", sans-serif;
+  }
+}
+.footer-logo-area {
+  margin-top: 60px;
+
+  img {
+    width: 240px;
+  }
+  p {
+    font-family: "Roboto Condensed", sans-serif;
+    color: white;
+    margin-top: 30px;
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 479.98px) {
+  .footer-logo-area {
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+}

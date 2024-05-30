@@ -1,0 +1,66 @@
+.product-item::before {
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 10px 0px rgb(0 0 0 / 15%);
+  box-shadow: 0 0 10px 0px rgb(0 0 0 / 15%);
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: all 0.3s ease-in-out;
+}
+
+.product-item {
+  &:hover::before {
+    opacity: 1;
+  }
+  &:hover .product-thumb {
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+.product-thumb::before {
+  background-color: #00000026;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  line-height: 1;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: var(--text-color-1);
+  font-style: italic;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.title-stroke {
+  color: #a64637;
+  font-size: 60px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: currentColor;
+  font-family: "Montserrat", sans-serif;
+}

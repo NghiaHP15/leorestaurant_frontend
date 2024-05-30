@@ -1,0 +1,55 @@
+.title {
+  text-align: center;
+  font-family: "Russo One", sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -1.4px;
+  line-height: 1.15;
+  margin: 0;
+}
+.title-stroke {
+  margin-left: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: "Russo One", sans-serif;
+  font-size: 60px;
+  font-weight: 400;
+  letter-spacing: -1.4px;
+  line-height: 1.15;
+  margin-bottom: 0;
+  margin: 0;
+  margin-left: 10px;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: currentColor;
+}
+.content-slider {
+  margin-top: 30px;
+}
+
+.slider-item {
+  height: 420px;
+  overflow: hidden;
+  margin: 0 5px;
+}
+
+.bg-thumb {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  &:hover {
+    transform: scale(1.2);
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+  }
+}

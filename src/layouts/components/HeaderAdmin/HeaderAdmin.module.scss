@@ -1,0 +1,53 @@
+.topbar {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.topbar-search .search {
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+.topbar-search.active .search {
+  width: 220px;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.topbar-search .btn-search {
+  opacity: 1;
+  transition: opacity 0.3s;
+  transition-delay: 0.3s;
+}
+.topbar-search.active .btn-search {
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+  transition: opacity 0.1s;
+  transition-delay: 0.1s;
+}
+.topbar-search.active .input-search {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--primary-sub);
+}
+.input-search {
+  &:hover {
+    box-shadow: 0 0 0 0.2rem var(--primary-sub);
+    border-color: var(--primary);
+  }
+  &:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem var(--primary-sub);
+  }
+}
+
+.menuitem-content {
+  font-family: "Roboto Condensed", sans-serif;
+
+  span {
+    color: var(--text-color-1);
+  }
+}
+.popup_message {
+  height: 545px;
+}

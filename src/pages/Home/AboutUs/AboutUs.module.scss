@@ -1,0 +1,37 @@
+.category-item {
+  max-width: 79%;
+  position: absolute;
+  right: -20px;
+  top: 14%;
+  width: 100%;
+}
+
+.hover-scale {
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+}
+.hover-scale:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+}
+.title {
+  font-size: 55px;
+  font-weight: 900;
+  letter-spacing: -1.4px;
+  line-height: 1.15;
+}
+
+.decription {
+  color: var(--text-color-2);
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 30px;
+}

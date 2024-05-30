@@ -1,0 +1,44 @@
+.content-area {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  margin-top: -200px;
+  z-index: 10;
+}
+.box-menu-home {
+  background: #fff;
+  border: solid 3px #d7d7d7;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  position: relative;
+  padding: 30px;
+
+  &::before {
+    position: absolute;
+    width: 200px;
+    height: 68px;
+    background: url("https://nethue.com.vn/images/label-box-menu.png") no-repeat
+      bottom;
+    content: "";
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: -61px;
+    z-index: 10;
+  }
+  &::after {
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    border: solid 1px #d7d7d7;
+    content: "";
+    left: 5px;
+    top: 5px;
+    position: absolute;
+    z-index: 0;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+  }
+}
+.content-item {
+  position: relative;
+  z-index: 1;
+}

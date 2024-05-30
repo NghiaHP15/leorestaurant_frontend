@@ -1,0 +1,24 @@
+.thumb::after {
+  background-color: #000;
+  content: "";
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  transition: all 0.3s;
+}
+.bg-image-form {
+  transform: none;
+}
+
+.bg-thumd {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-animation-duration: 20s;
+  animation-duration: 20s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  transition: 10s;
+}

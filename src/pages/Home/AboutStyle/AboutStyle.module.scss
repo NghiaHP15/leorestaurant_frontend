@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+And+White+Picture&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap");
+
+.about-style-area::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  background-color: #eee;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 40%;
+}
+.title-area {
+  left: -60px;
+  margin-bottom: 50px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.title-style {
+  color: var(--text-color-1);
+  display: inline-block;
+  font-size: 70px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.64px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.title-stroke {
+  color: #801111;
+  font-size: 80px;
+  font-weight: 700;
+  font-style: italic;
+  left: 118px;
+  line-height: 1;
+  position: absolute;
+  text-transform: uppercase;
+  top: 0;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: currentColor;
+  z-index: -1;
+}
+.sub-title {
+  align-items: end;
+  display: flex;
+  color: var(--text-color-1);
+  font-family: "Black And White Picture", sans-serif;
+  font-size: 110px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.64px;
+  line-height: 1;
+  margin-left: 200px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.content-area p {
+  margin-top: 30px;
+  margin-bottom: 45px;
+  font-size: 18px;
+  color: var(--text-color-1);
+}
