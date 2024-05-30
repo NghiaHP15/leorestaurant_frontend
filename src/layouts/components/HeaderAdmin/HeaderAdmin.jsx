@@ -17,6 +17,7 @@ import Loading from "../../../components/Loading";
 import images from "../../../assets/images";
 import { formatDistanceToNow } from "date-fns";
 import config from "../../../config";
+import Cookies from "js-cookie";
 
 const cx = classNames.bind(styles);
 
@@ -48,6 +49,7 @@ function HeaderAdmin() {
     await UserService.logOutUser();
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    Cookies.remove("refresh_token");
     dispatch(resetUser());
     setLoading(false);
     navigator(router.register);

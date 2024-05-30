@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { updateUser } from "../../../redux/slides/userSlice";
 import router from "../../../config/router";
 import Loading from "../../Loading";
+import Cookie from "js-cookie";
 
 const cx = classNames.bind(styles);
 
@@ -95,6 +96,7 @@ function ModalForm({ disible }) {
         "refresh_token",
         JSON.stringify(loginData?.refresh_token)
       );
+      Cookie.set("refresh_token", loginData?.refresh_token);
       if (checked) {
         localStorage.setItem("username", login.username);
         localStorage.setItem("password", btoa(login.password));
