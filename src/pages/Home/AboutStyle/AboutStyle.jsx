@@ -25,7 +25,7 @@ function AboutStyle({ data }) {
                 >
                   <div className={cx("thumb", "overflow-hidden")}>
                     <img
-                      src="/image/style/style-1.jpg"
+                      src="https://res.cloudinary.com/dn1tmr9ya/image/upload/v1717128021/ImageRestaurant/style-1_e5joox.jpg"
                       alt="Moren-Shop"
                       width={"100%"}
                     />
@@ -64,7 +64,7 @@ function AboutStyle({ data }) {
                       >
                         <div className={cx("thumb", "overflow-hidden")}>
                           <img
-                            src="/image/style/style-2.jpg"
+                            src="https://res.cloudinary.com/dn1tmr9ya/image/upload/v1717128018/ImageRestaurant/style-3_r74pty.jpg"
                             alt="Moren-Shop"
                             className="w-full"
                           />
@@ -86,7 +86,7 @@ function AboutStyle({ data }) {
                       >
                         <div className={cx("thumb", "overflow-hidden")}>
                           <img
-                            src="/image/style/style-3.jpg"
+                            src="https://res.cloudinary.com/dn1tmr9ya/image/upload/v1717128018/ImageRestaurant/style-2_ml3dlr.jpg"
                             alt="Moren-Shop"
                             className="w-full"
                           />

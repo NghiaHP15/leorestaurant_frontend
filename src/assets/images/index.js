@@ -29,17 +29,7 @@ const images = {
   uploadImage: require("../../assets/images/upload-image.png"),
   silderDf: require("../../assets/images/slider-default.jpg"),
   image: require("../../assets/images/image.png"),
-  /////////////////////////////////////////////////////////
-  menu2: require("../../assets/images/test/menu2.jpg"),
-  menu1: require("../../assets/images/test/menu1.jpg"),
-  menu3: require("../../assets/images/test/menu3.jpg"),
-  menu4: require("../../assets/images/test/menu4.jfif"),
-  menu5: require("../../assets/images/test/menu5.jfif"),
-  menu6: require("../../assets/images/test/menu6.jfif"),
-  menubg: require("../../assets/images/test/menubg.jfif"),
-  restaurant1: require("../../assets/images/test/restaurant1.jfif"),
-  restaurant2: require("../../assets/images/test/restaurant2.jfif"),
-  restaurant3: require("../../assets/images/test/restaurant3.jpg"),
+  bg_form_register: require("../../assets/images/gb-1.jpg"),
 };
 
 export default images;

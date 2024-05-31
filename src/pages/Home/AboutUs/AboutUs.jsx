@@ -14,7 +14,7 @@ function AboutUs({ data }) {
               <div data-aos="fade-right" className={cx("overflow-hidden w-6")}>
                 <img
                   className={cx("hover-scale")}
-                  src="http://localhost:3000/image/shop/74.jpg"
+                  src="https://res.cloudinary.com/dn1tmr9ya/image/upload/v1717127706/ImageRestaurant/about-us-1_ofteez.jpg"
                   alt="shop-Image"
                 />
               </div>
@@ -22,7 +22,7 @@ function AboutUs({ data }) {
                 <div className={cx("overflow-hidden")}>
                   <img
                     className={cx("hover-scale")}
-                    src="http://localhost:3000/image/aboutUs/about-us-2.jpg"
+                    src="https://res.cloudinary.com/dn1tmr9ya/image/upload/v1717127707/ImageRestaurant/about-us-2_p8bhbs.jpg"
                     alt="shop-Image"
                   />
                   <div className={cx("effect-content")}></div>

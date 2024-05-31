@@ -24,6 +24,7 @@ import { updateUser } from "../../../redux/slides/userSlice";
 import router from "../../../config/router";
 import Loading from "../../Loading";
 import Cookie from "js-cookie";
+import images from "../../../assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -546,7 +547,7 @@ function ModalForm({ disible }) {
               style={{
                 left: " -100%",
                 width: "200%",
-                background: 'url("/image/login/gb-1.jpg")',
+                background: `url(${images.bg_form_register})`,
                 transform: active ? "translateX(50%)" : "translateX(0)",
               }}
             >
