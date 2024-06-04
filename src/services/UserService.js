@@ -128,7 +128,7 @@ export const refreshToken = async (refreshToken) => {
       {},
       {
         headers: {
-          token: `Beare ${refreshToken}`,
+          token: `Bearer ${refreshToken}`,
         },
       }
     );

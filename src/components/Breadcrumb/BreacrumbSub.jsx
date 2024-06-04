@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { BreadCrumb } from "primereact/breadcrumb";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { publicRoutes } from "../../routes/routes";
+import { RoutesPath } from "../../routes/routes";
 
 function BreadCrumbSub({ home }) {
   const [breadcrumbs, setBreabCrumbs] = useState([]);
@@ -14,10 +13,10 @@ function BreadCrumbSub({ home }) {
     let name;
     const breadcrumbsArray = crumbs.map((pathname, index) => {
       if (index <= 0) {
-        name = publicRoutes.find((item) => item.path === `/${pathname}`);
+        name = RoutesPath.find((item) => item.path === `/${pathname}`);
       } else {
         const url = `/${crumbs.slice(0, index + 1).join("/")}`;
-        name = publicRoutes.find((item) => item.path === `${url}`);
+        name = RoutesPath.find((item) => item.path === `${url}`);
       }
       return {
         lable: name.name,

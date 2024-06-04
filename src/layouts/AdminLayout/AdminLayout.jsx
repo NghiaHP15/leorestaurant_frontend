@@ -4,7 +4,7 @@ import SidebarAdmin from "../components/SidebarAdmin";
 import { Button } from "primereact/button";
 import { useClickOutside } from "primereact/hooks";
 import BreadCrumbCustom from "../../components/Breadcrumb";
-import { publicRoutes } from "../../routes/routes";
+import { RoutesPath } from "../../routes/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { isJsonString } from "../../utils";
 import { jwtDecode } from "jwt-decode";
@@ -15,22 +15,22 @@ function AdminLayout({ children }) {
   const overlayRef = useRef(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const { decoded } = handleDecoded();
-    if (!decoded?.id) {
-      navigate(config.router.register);
-    }
-  });
+  // useEffect(() => {
+  //   const { decoded } = handleDecoded();
+  //   if (!decoded?.id) {
+  //     navigate(config.router.register);
+  //   }
+  // });
 
-  const handleDecoded = () => {
-    let storageData = localStorage.getItem("access_token");
-    let decoded = {};
-    if (storageData && isJsonString(storageData)) {
-      storageData = JSON.parse(storageData);
-      decoded = jwtDecode(storageData);
-    }
-    return { decoded, storageData };
-  };
+  // const handleDecoded = () => {
+  //   let storageData = localStorage.getItem("access_token");
+  //   let decoded = {};
+  //   if (storageData && isJsonString(storageData)) {
+  //     storageData = JSON.parse(storageData);
+  //     decoded = jwtDecode(storageData);
+  //   }
+  //   return { decoded, storageData };
+  // };
 
   useClickOutside(overlayRef, () => {
     setVisible(false);
@@ -41,7 +41,7 @@ function AdminLayout({ children }) {
       <Link
         style={{ fontFamily: '"Roboto Condensed", sans-serif' }}
         className="no-underline capitalize text-color-secondary text-sm font-normal"
-        to="/admin"
+        to="/dashboard"
       >
         Admin
       </Link>
@@ -75,7 +75,7 @@ function AdminLayout({ children }) {
                 className="font-semibold text-orange-500 hover:text-orange-600 py-2"
                 onClick={() => setVisible(!visible)}
               />
-              <BreadCrumbCustom model={publicRoutes} home={home} />
+              <BreadCrumbCustom model={RoutesPath} home={home} />
             </div>
             {children}
           </div>

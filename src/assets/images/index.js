@@ -30,6 +30,7 @@ const images = {
   silderDf: require("../../assets/images/slider-default.jpg"),
   image: require("../../assets/images/image.png"),
   bg_form_register: require("../../assets/images/gb-1.jpg"),
+  page_not_found: require("../../assets/images/page-not-found.jpg"),
 };
 
 export default images;

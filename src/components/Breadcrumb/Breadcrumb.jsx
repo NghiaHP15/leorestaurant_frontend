@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BreadCrumb } from "primereact/breadcrumb";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { publicRoutes } from "../../routes/routes";
+import { RoutesPath } from "../../routes/routes";
 import classNames from "classnames/bind";
 
 const cx = classNames.bind();
@@ -20,7 +20,7 @@ function BreadCrumbCustom({ home, className }) {
     const breadcrumbsArray = crumbs.map((pathname, index) => {
       if (index > 0) {
         const url = `/${crumbs.slice(1, index + 1).join("/")}`;
-        const name = publicRoutes.find(
+        const name = RoutesPath.find(
           (item) => item.path === `/${crumbs[0] + url}`
         );
         return {

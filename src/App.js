@@ -1,21 +1,25 @@
 import { Fragment, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
-import { publicRoutes } from "./routes/routes";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { RoutesPath } from "./routes/routes";
 import { DefaultLayout } from "./layouts";
 import "./App.css";
 import { isJsonString } from "./utils";
 import { jwtDecode } from "jwt-decode";
 import * as UserService from "./services/UserService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetUser, updateUser } from "./redux/slides/userSlice";
+import NotFound from "./pages/Client/NotFound";
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   useEffect(() => {
     const { storageData, decoded } = handleDecoded("access_token");
     if (decoded?.id) {
       handleGetDetailToken(decoded?.id, storageData);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDecoded = (token) => {
@@ -45,7 +49,6 @@ function App() {
     async (config) => {
       const currentTiem = new Date();
       const { decoded: decodedAccess } = handleDecoded("access_token");
-      console.log(decodedAccess);
       const { decoded: decodedRefresh, storageData: storageDataRefresh } =
         handleDecoded("refresh_token");
       if (decodedAccess?.exp < currentTiem.getTime() / 1000) {
@@ -60,6 +63,7 @@ function App() {
         } else {
           dispatch(resetUser());
         }
+      } else {
       }
       return config;
     },
@@ -72,19 +76,19 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
-          {publicRoutes.map((route, index) => {
+          {RoutesPath.map((route, index) => {
             const Page = route.component;
             let Layout = DefaultLayout;
-
+            const isCheckAuth = !route.isPrivate || user.isAdmin;
+            const path = isCheckAuth ? route.path : "";
             if (route.layout) {
               Layout = route.layout;
             } else if (route.layout === null) {
               Layout = Fragment;
             }
-
             return (
               <Route
-                path={route.path}
+                path={path}
                 key={index}
                 element={
                   <Layout>
@@ -94,6 +98,7 @@ function App() {
               />
             );
           })}
+          <Route path="*" element={<NotFound />} /> {/* Route bắt tất cả */}
         </Routes>
       </div>
     </Router>

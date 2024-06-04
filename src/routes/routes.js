@@ -57,7 +57,7 @@ import CreateBlog from "../pages/Admin/Web/Blog/CreateBlog";
 import EditBlog from "../pages/Admin/Web/Blog/EditBlog";
 import Infor from "../pages/Admin/Setting/Infor";
 
-const publicRoutes = [
+const RoutesPath = [
   {
     name: "Trang chủ",
     component: Home,
@@ -104,30 +104,35 @@ const publicRoutes = [
     component: Banner,
     path: config.router.slider,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Danh sách bộ sưu tập",
     component: Gallery,
     path: config.router.gallery,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Danh sách bài viết",
     component: Blog,
     path: config.router.blog,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Tạo bài viết",
     component: CreateBlog,
     path: config.router.createBlog,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Sửa bài viết",
     component: EditBlog,
     path: config.router.editBlog,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Admin",
@@ -393,48 +398,56 @@ const publicRoutes = [
     path: config.router.setting,
     component: Overview,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Thiết thông tin nhà hàng",
     path: config.router.settingInfor,
     component: Infor,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Thiết lập loại bàn",
     path: config.router.settingCategoryTable,
     component: CategoryTable,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Thiết danh sách bàn",
     path: config.router.settingTable,
     component: ListTable,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Thiết lập khu vực",
     path: config.router.settingAreaTablr,
     component: AreaTable,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Thiết lập Banner",
     path: config.router.settingBanner,
     component: CategoryBanner,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Thiết lập bộ sưu tập",
     path: config.router.settingImage,
     component: CategoryGallery,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Khách hàng",
     path: config.router.customer,
     component: Customer,
     layout: AdminLayout,
+    isPrivate: true,
   },
   {
     name: "Đăng ký và đăng nhập tài khoản",
@@ -444,4 +457,4 @@ const publicRoutes = [
   },
 ];
 
-export { publicRoutes };
+export { RoutesPath };

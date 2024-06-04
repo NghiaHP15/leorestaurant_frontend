@@ -75,5 +75,5 @@
     "react-app-rewired": "^2.2.1",
     "sass": "^1.69.1"
   },
-  "proxy": "https://leorestaurant-backend.onrender.com"
+  "proxy": "http://localhost:3001"
 }
