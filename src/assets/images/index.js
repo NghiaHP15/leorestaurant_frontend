@@ -31,6 +31,7 @@ const images = {
   image: require("../../assets/images/image.png"),
   bg_form_register: require("../../assets/images/gb-1.jpg"),
   page_not_found: require("../../assets/images/page-not-found.jpg"),
+  mobi_bg: require("../../assets/images/mobi-bg.jpg"),
 };
 
 export default images;

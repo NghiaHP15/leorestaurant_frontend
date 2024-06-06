@@ -56,8 +56,15 @@ import Blog from "../pages/Admin/Web/Blog/Blog";
 import CreateBlog from "../pages/Admin/Web/Blog/CreateBlog";
 import EditBlog from "../pages/Admin/Web/Blog/EditBlog";
 import Infor from "../pages/Admin/Setting/Infor";
+import MobiePage from "../pages/Client/MobiePage";
 
 const RoutesPath = [
+  {
+    name: "Mobie",
+    component: MobiePage,
+    path: config.router.mobiePage,
+    layout: null,
+  },
   {
     name: "Trang chủ",
     component: Home,

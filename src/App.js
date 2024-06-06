@@ -9,10 +9,13 @@ import * as UserService from "./services/UserService";
 import { useDispatch, useSelector } from "react-redux";
 import { resetUser, updateUser } from "./redux/slides/userSlice";
 import NotFound from "./pages/Client/NotFound";
+import { isMobile } from "react-device-detect";
+import MobiePage from "./pages/Client/MobiePage";
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+
   useEffect(() => {
     const { storageData, decoded } = handleDecoded("access_token");
     if (decoded?.id) {
@@ -91,9 +94,13 @@ function App() {
                 path={path}
                 key={index}
                 element={
-                  <Layout>
-                    <Page />
-                  </Layout>
+                  isMobile ? (
+                    <MobiePage />
+                  ) : (
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  )
                 }
               />
             );

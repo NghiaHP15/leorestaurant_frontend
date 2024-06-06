@@ -1,6 +1,7 @@
 const router = {
   home: "/",
   aboutPage: "/about",
+  mobiePage: "/mobie",
   blogPage: "/blog",
   contactPage: "/contact",
   historyPage: "/history",
