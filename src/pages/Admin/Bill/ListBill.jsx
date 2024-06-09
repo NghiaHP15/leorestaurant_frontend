@@ -7,6 +7,7 @@ import { DataView } from "primereact/dataview";
 import * as BillService from "../../../services/BillService";
 import * as RecipeService from "../../../services/RecipeService";
 import * as InforService from "../../../services/InforService";
+import * as BookingService from "../../../services/BookingService";
 import { useNavigate } from "react-router-dom";
 import config from "../../../config";
 import {
@@ -234,6 +235,10 @@ function ListBill() {
     RecipeService.pointRecipe(data)
   );
 
+  const mutationBooking = userMutationHook((data) =>
+    BookingService.editBooking(data._id, data)
+  );
+
   const { data } = mutation;
 
   useEffect(() => {
@@ -288,8 +293,10 @@ function ListBill() {
       _pay.isPaid = true;
       _pay.timeOut = date;
       _pay.total = price;
+      _pay.booking.paymentStatus = true;
       mutation.mutate(_pay);
       mutationRecipe.mutate(_pay);
+      mutationBooking.mutate(_pay.booking);
       setPay(_pay);
       setPaidDialog(true);
       hidePayDialog();
@@ -303,9 +310,11 @@ function ListBill() {
     _pay.isPaid = true;
     _pay.timeOut = date;
     _pay.total = price;
+    _pay.booking.paymentStatus = true;
     if (price > 0) {
       mutation.mutate(_pay);
       mutationRecipe.mutate(_pay);
+      mutationBooking.mutate(_pay.booking);
       setPay(_pay);
       setPaidDialog(true);
       hideQRDialog();

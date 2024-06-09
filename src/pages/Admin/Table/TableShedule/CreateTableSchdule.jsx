@@ -19,6 +19,12 @@ import config from "../../../../config";
 import { userMutationHook } from "../../../../hooks/useMutationHook";
 import { filter, isEqual } from "lodash";
 import { Checkbox } from "primereact/checkbox";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleCheck,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import { Toast } from "primereact/toast";
 
 const defaultValue = {
   customer_name: "",
@@ -48,11 +54,24 @@ export default function CreateTableSchedule() {
   const [food, setFood] = useState(null);
   const [checkCustomer, setCheckCustomer] = useState(false);
   const navigator = useNavigate();
+  const toast = useRef();
 
   const mutation = userMutationHook((data) =>
     BookingService.createBooking(data)
   );
   const { data, isSuccess, isPending } = mutation;
+
+  if (isSuccess && data?.error) {
+    toast.current.show({
+      severity: "error",
+      summary: "Không thành công",
+      detail: `Bàn đã được dùng`,
+      icon: (
+        <FontAwesomeIcon icon={faCircleXmark} className="text-red-500 h-2rem" />
+      ),
+      life: 3000,
+    });
+  }
 
   const mutationCustomer = userMutationHook((data) =>
     CustomerService.createCustomer(data)
@@ -618,6 +637,12 @@ export default function CreateTableSchedule() {
           </div>
         </div>
       </div>
+      <Toast
+        ref={toast}
+        pt={{
+          content: "bg-white text-color align-items-center",
+        }}
+      />
     </>
   );
 }

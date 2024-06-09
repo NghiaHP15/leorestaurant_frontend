@@ -35,16 +35,11 @@ const dataBill = {
   name_staff: "",
 };
 
-const ItemTemplate = ({ product, confirmDelete }) => {
+const ItemTemplate = ({ product, confirmDelete, mutation }) => {
   const menu = useRef(null);
   const navigator = useNavigate();
 
   const mutationBill = userMutationHook((data) => BillService.createBill(data));
-
-  const mutationBooking = userMutationHook((data) =>
-    BookingService.editBooking(data._id, data)
-  );
-
   const handleSelectItem = (id) => {
     navigator(config.router.tableSelectItem, {
       state: {
@@ -72,8 +67,7 @@ const ItemTemplate = ({ product, confirmDelete }) => {
     // _table.receive = true;
     mutationBill.mutate(_dataBill);
     // mutationTable.mutate(_table);
-    mutationBooking.mutate(_data);
-    navigator(config.router.listBill);
+    mutation.mutate(_data);
   };
 
   return (
@@ -204,11 +198,11 @@ function TableSchedule() {
     { label: "Mặc định", value: "" },
   ];
 
-  const mutationEdit = userMutationHook((data) =>
+  const mutation = userMutationHook((data) =>
     BookingService.editBooking(data._id, data)
   );
 
-  const { data: dataEdit } = mutationEdit;
+  const { data: dataEdit } = mutation;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -246,7 +240,7 @@ function TableSchedule() {
   const deleteValue = () => {
     const _value = { ...value };
     _value.cancel = true;
-    mutationEdit.mutate(_value);
+    mutation.mutate(_value);
     hideDeleteDialog();
     toast.current.show({
       severity: "success",
@@ -271,7 +265,7 @@ function TableSchedule() {
           product={product}
           key={index}
           confirmDelete={comfirmDelete}
-          mutation={mutationEdit}
+          mutation={mutation}
         />
       );
     });
