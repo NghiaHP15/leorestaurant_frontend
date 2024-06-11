@@ -433,7 +433,7 @@ function HomeAdmin() {
                 Doanh thu
               </span>
               <span className="text-blue-500 block text-3xl font-bold">
-                {getMoney(dataCart.total)}
+                {getMoney(dataCart.total || 0)}
               </span>
             </div>
           </div>

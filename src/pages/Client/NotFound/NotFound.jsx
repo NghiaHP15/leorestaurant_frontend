@@ -4,10 +4,6 @@ import images from "../../../assets/images";
 function NotFound() {
   return (
     <div className=" h-full w-full flex align-items-center justify-content-center">
-      {/* <div
-        className="w-10 h-full bg-no-repeat bg-cover bg-center border-round-3xl shadow-2"
-        style={{ background: `url(${images.page_not_found})` }}
-      ></div> */}
       <div className="border-round-3xl shadow-2 overflow-hidden mx-8">
         <img src={`${images.page_not_found}`} alt="image" className="w-full" />
       </div>

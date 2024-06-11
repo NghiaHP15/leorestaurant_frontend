@@ -52,7 +52,7 @@ const router = {
   recipe: "/dashboard/recipe",
   createRecipe: "/dashboard/recipe/create",
   editRecipe: "/dashboard/recipe/edit",
-  register: "/admin",
+  register: "/login",
   setting: "/dashboard/setting",
   settingInfor: "/dashboard/setting/about-us",
   settingCategoryTable: "/dashboard/setting/category-table",

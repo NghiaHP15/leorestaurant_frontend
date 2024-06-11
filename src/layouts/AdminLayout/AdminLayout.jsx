@@ -1,19 +1,15 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import HeaderAdmin from "../components/HeaderAdmin";
 import SidebarAdmin from "../components/SidebarAdmin";
 import { Button } from "primereact/button";
 import { useClickOutside } from "primereact/hooks";
 import BreadCrumbCustom from "../../components/Breadcrumb";
 import { RoutesPath } from "../../routes/routes";
-import { Link, useNavigate } from "react-router-dom";
-import { isJsonString } from "../../utils";
-import { jwtDecode } from "jwt-decode";
-import config from "../../config";
+import { Link } from "react-router-dom";
 
 function AdminLayout({ children }) {
   const [visible, setVisible] = useState(false);
   const overlayRef = useRef(null);
-  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const { decoded } = handleDecoded();
