@@ -8,6 +8,7 @@ import images from "../../../assets/images";
 import { formatCurrency } from "../../../hooks/useFormat";
 import config from "../../../config";
 import { useNavigate } from "react-router-dom";
+import Report from "./ExportReport";
 
 const ChartRevenue = ({ data }) => {
   const [chartData, setChartData] = useState({});
@@ -113,10 +114,13 @@ const ChartRevenue = ({ data }) => {
 
   return (
     <div className="card p-5 border-round-2xl bg-white shadow-2">
-      <div className="flex justify-content-between mb-5">
+      <div className="mb-5">
         <span className="text-900 text-xl font-semibold capitalize font-family">
           Tổng quan về doanh thu
         </span>
+        <div>
+          <Report />
+        </div>
       </div>
       <div>
         <Chart type="bar" data={chartData} options={chartOptions} />

@@ -119,3 +119,15 @@ export const getNotify = async () => {
     throw error;
   }
 };
+
+export const getReport = async () => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/report/get-report`
+    );
+    return res.data;
+  } catch (error) {
+    console.log("Lỗi lấy thông tin xuất báo cáo", error);
+    throw error;
+  }
+};
