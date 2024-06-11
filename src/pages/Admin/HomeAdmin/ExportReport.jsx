@@ -38,8 +38,8 @@ const Report = () => {
 
         // Render the document with the data
         doc.render({
-          month_report : '5',
-          year_report: '2024',
+          month_report: "6",
+          year_report: "2024",
           tongdoanhthu: data.overview.tongdoanhthu,
           loinhuan: data.overview.loinhuan,
           loinhuantheophantram: data.overview.loinhuantheophantram,
