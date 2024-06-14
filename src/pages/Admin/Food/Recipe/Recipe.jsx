@@ -21,6 +21,7 @@ import config from "../../../../config";
 import { Rating } from "primereact/rating";
 import { Tag } from "primereact/tag";
 import { Checkbox } from "primereact/checkbox";
+import { useSelector } from "react-redux";
 
 function Recipe() {
   const [nameFilterValue, setNameFilterValue] = useState("");
@@ -36,11 +37,25 @@ function Recipe() {
   const [expandedRows, setExpandedRows] = useState(null);
   const exportCSV = useRef(null);
   const toast = useRef(null);
+  const [checkPermission, setCheckPermission] = useState({});
   const navigator = useNavigate();
   const [filters, setFilters] = useState({
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     "categoryFood._id": { value: null, matchMode: FilterMatchMode.EQUALS },
   });
+
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7320a7446ecd60582d1"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const mutationDelete = userMutationHook((data) =>
     RecipeService.deleteRecipe(data)
@@ -241,14 +256,14 @@ function Recipe() {
             severity="info"
             aria-label="Search"
             className="mr-2"
-            onClick={() => handleEditClick(rowData)}
+            onClick={() => checkPermission.edit && handleEditClick(rowData)}
           />
           <Button
             icon="pi pi-trash"
             rounded
             severity="danger"
             aria-label="Cancel"
-            onClick={() => comfirmDelete(rowData)}
+            onClick={() => checkPermission.delete && comfirmDelete(rowData)}
           />
         </div>
       </>
@@ -288,14 +303,16 @@ function Recipe() {
               icon="pi pi-plus"
               severity="success"
               className="mr-2 border-round-md font-semibold font-family"
-              onClick={() => navigator(config.router.createRecipe)}
+              onClick={() =>
+                checkPermission.create && navigator(config.router.createRecipe)
+              }
             />
             <Button
               label="Delete"
               icon=" pi pi-trash"
               severity="danger"
               className="border-round-md font-semibold font-family"
-              onClick={comfirmDeleteSelect}
+              onClick={checkPermission.delete && comfirmDeleteSelect}
               disabled={disableDeleteSelect}
             />
           </div>
@@ -341,7 +358,7 @@ function Recipe() {
         <DataTable
           ref={exportCSV}
           value={listData}
-          tableStyle={{ minWidth: "1350px" }}
+          tableStyle={{ minWidth: "85rem" }}
           selection={selectedValues}
           selectionMode={"checkbox"}
           filters={filters}

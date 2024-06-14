@@ -31,8 +31,15 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { InputNumber } from "primereact/inputnumber";
 import images from "../../../assets/images";
 import { Image } from "primereact/image";
+import { useSelector } from "react-redux";
 
-const ItemTemplate = ({ product, confirmDelete, handlePay, handleQR }) => {
+const ItemTemplate = ({
+  product,
+  confirmDelete,
+  handlePay,
+  handleQR,
+  permission,
+}) => {
   const menu = useRef(null);
   const pay = useRef(null);
   const navigator = useNavigate();
@@ -127,7 +134,9 @@ const ItemTemplate = ({ product, confirmDelete, handlePay, handleQR }) => {
               <ul className="list-none p-0 m-0 font-family">
                 <li
                   className="py-2 px-3 hover:surface-100"
-                  onClick={() => handleSelectTable(product.booking._id)}
+                  onClick={() =>
+                    permission.edit && handleSelectTable(product.booking._id)
+                  }
                 >
                   <span>
                     <i className="pi pi-arrow-right-arrow-left mr-2 text-green-400"></i>
@@ -136,7 +145,9 @@ const ItemTemplate = ({ product, confirmDelete, handlePay, handleQR }) => {
                 </li>
                 <li
                   className="py-2 px-3 hover:surface-100"
-                  onClick={() => handleSelectItem(product.booking._id)}
+                  onClick={() =>
+                    permission.edit && handleSelectItem(product.booking._id)
+                  }
                 >
                   <span>
                     <i className="pi pi-plus mr-2 text-blue-400"></i>Chọn món
@@ -144,7 +155,7 @@ const ItemTemplate = ({ product, confirmDelete, handlePay, handleQR }) => {
                 </li>
                 <li
                   className="py-2 px-3 hover:surface-100"
-                  onClick={() => confirmDelete(product)}
+                  onClick={() => permission.delete && confirmDelete(product)}
                 >
                   <span>
                     <i className="pi pi-times mr-2 text-red-500"></i>Hủy đơn
@@ -158,7 +169,7 @@ const ItemTemplate = ({ product, confirmDelete, handlePay, handleQR }) => {
               label="Thanh toán"
               text
               className="border-none shadow-none text-white font-family"
-              onClick={(e) => pay.current.toggle(e)}
+              onClick={(e) => permission.create && pay.current.toggle(e)}
             />
             <OverlayPanel
               ref={pay}
@@ -219,6 +230,7 @@ function ListBill() {
   const [reason, setReason] = useState("");
   const [value, setValue] = useState("");
   const [pay, setPay] = useState("");
+  const [checkPermission, setCheckPermission] = useState({});
   const [logoQR, setLogoQR] = useState("");
   const [paid, setPaid] = useState({
     pay: "",
@@ -226,6 +238,18 @@ function ListBill() {
   });
   const navigator = useNavigate();
   const toast = useRef(null);
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7230a7446ecd60582cc"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const mutation = userMutationHook((data) =>
     BillService.editBill(data._id, data)
@@ -287,13 +311,16 @@ function ListBill() {
 
   const confirmPay = () => {
     const _pay = { ...pay };
-    const price = _pay.booking.priceSale - _pay.booking.priceSell;
+    const price =
+      _pay.booking.priceSale - _pay.booking.priceSell + _pay.servicePrice;
+    const total = price + (price * _pay.servicePrice) / 100;
     const date = new Date();
-    if (price && paid.pay >= price) {
+    if (total && paid.pay >= total) {
       _pay.isPaid = true;
       _pay.timeOut = date;
-      _pay.total = price;
+      _pay.total = total;
       _pay.booking.paymentStatus = true;
+      console.log(_pay);
       mutation.mutate(_pay);
       mutationRecipe.mutate(_pay);
       mutationBooking.mutate(_pay.booking);
@@ -350,13 +377,21 @@ function ListBill() {
     setSelectedCancel(event.value);
   };
 
+  const handleChangeInput = (event, name) => {
+    const { value } = event;
+    const _pay = { ...pay };
+    _pay[name] = value;
+    setPay(_pay);
+  };
+
   const handlePaidBill = (event) => {
     const money = pay.booking.priceSale - (pay.booking.priceSell || 0);
+    const total = money + (money * pay.servicePrice) / 100;
     const { value } = event;
     const _paid = { ...paid };
     _paid.pay = value;
     _paid.change =
-      Number(_paid.pay) > Number(money) ? Number(_paid.pay) - Number(money) : 0;
+      Number(_paid.pay) > Number(total) ? Number(_paid.pay) - Number(total) : 0;
     setPaid(_paid);
   };
 
@@ -377,6 +412,7 @@ function ListBill() {
             confirmDelete={comfirmDelete}
             handlePay={handlePay}
             handleQR={handleQR}
+            permission={checkPermission}
           />
         );
       }
@@ -501,12 +537,48 @@ function ListBill() {
           <div>
             <div className="p-inputgroup flex-1 mb-3 h-3rem">
               <span className="p-inputgroup-addon surface-100 w-4">
-                Cần thanh toán
+                Tổng giá
               </span>
               <InputNumber
                 placeholder="Tổng tiền khách thanh toán"
                 inputClassName="font-family font-semibold"
                 value={pay.booking?.priceSale - (pay.booking?.priceSell || 0)}
+                disabled
+                suffix=" VND"
+                pt={{
+                  root: "font-family",
+                }}
+              />
+            </div>
+            <div className="p-inputgroup flex-1 mb-3 h-3rem">
+              <span className="p-inputgroup-addon surface-100 w-4">
+                Giá dịch vụ
+              </span>
+              <InputNumber
+                placeholder="Giá dịch vụ"
+                inputClassName="font-family font-semibold"
+                value={pay.servicePrice}
+                onChange={(e) => handleChangeInput(e, "servicePrice")}
+                suffix=" %"
+                pt={{
+                  root: "font-family",
+                }}
+              />
+            </div>
+            <div className="p-inputgroup flex-1 mb-3 h-3rem">
+              <span className="p-inputgroup-addon surface-100 w-4">
+                Giá thanh toán
+              </span>
+              <InputNumber
+                placeholder="Tổng tiền khách thanh toán"
+                inputClassName="font-family font-semibold"
+                value={
+                  pay.booking?.priceSale -
+                  (pay.booking?.priceSell || 0) +
+                  ((pay?.servicePrice || 0) *
+                    (pay.booking?.priceSale - (pay.booking?.priceSell || 0))) /
+                    100
+                }
                 disabled
                 suffix=" VND"
                 pt={{

@@ -9,14 +9,20 @@ import * as ReportService from "../../../services/ReportService";
 
 const Report = () => {
   const [reportData, setReportData] = useState(null);
+  const [reportDataDay, setReportDataDay] = useState(null);
 
   useEffect(() => {
     const fectData = async () => {
-      const result = await ReportService.getReport();
+      const [result, resultDay] = await Promise.all([
+        ReportService.getReport(),
+        ReportService.getReportDay(),
+      ]);
       setReportData(result.data);
+      setReportDataDay(resultDay.data);
     };
     fectData();
   }, []);
+  console.log(reportDataDay);
 
   const generateDocument = (data) => {
     const loadFile = (url, callback) => {
@@ -40,13 +46,13 @@ const Report = () => {
         doc.render({
           month_report: "6",
           year_report: "2024",
-          tongdoanhthu: data.overview.tongdoanhthu,
-          loinhuan: data.overview.loinhuan,
-          loinhuantheophantram: data.overview.loinhuantheophantram,
-          tongdonhangdacungcap: data.overview.tongdonhangdacungcap,
-          dichvu: data.dichvu.data,
-          doanhsobanhang: data.doanhsobanhang.data,
-          nhansu: data.nhansu.data,
+          tongdoanhthu: data?.overview?.tongdoanhthu,
+          loinhuan: data?.overview?.loinhuan,
+          loinhuantheophantram: data?.overview?.loinhuantheophantram,
+          tongdonhangdacungcap: data?.overview?.tongdonhangdacungcap,
+          dichvu: data?.dichvu?.data,
+          doanhsobanhang: data?.doanhsobanhang?.data,
+          nhansu: data?.nhansu?.data,
         });
 
         const out = doc.getZip().generate({
@@ -61,12 +67,21 @@ const Report = () => {
   };
 
   return (
-    <Button
-      text
-      label="Xuất báo cáo"
-      className="text-blue-400 font-semibold p-0 m-0 mt-2 hover:bg-white"
-      onClick={() => generateDocument(reportData)}
-    />
+    <>
+      <Button
+        text
+        label="Xuất báo cáo theo tháng"
+        className="text-blue-400 font-semibold p-0 m-0 mt-2 hover:bg-white"
+        onClick={() => generateDocument(reportData)}
+      />
+      <span className="mx-4 text-blue-400">-</span>
+      <Button
+        text
+        label="Xuất báo cáo theo ngày"
+        className="text-blue-400 font-semibold p-0 m-0 mt-2 hover:bg-white"
+        onClick={() => generateDocument(reportDataDay)}
+      />
+    </>
   );
 };
 

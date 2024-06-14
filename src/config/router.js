@@ -61,6 +61,8 @@ const router = {
   settingBanner: "/dashboard/setting/banner",
   settingImage: "/dashboard/setting/image",
   customer: "/dashboard/customer",
+  permission: "/dashboard/permission/select",
+  listPermission: "/dashboard/permission",
   settingAreaTablr: "/dashboard/setting/area-table",
 };
 

@@ -16,6 +16,7 @@ import * as SupplierService from "../../../../services/SupplierService";
 import { userMutationHook } from "../../../../hooks/useMutationHook";
 import LoadingTable from "../../../../components/Loading/LoadingTable";
 import { Skeleton } from "primereact/skeleton";
+import { useSelector } from "react-redux";
 
 function SupplierIngredient() {
   const [nameFilterValue, setNameFilterValue] = useState("");
@@ -28,12 +29,26 @@ function SupplierIngredient() {
   const [loading, setLoading] = useState(false);
   const [valueEdit, setValueEdit] = useState("");
   const [showEdit, setShowEdit] = useState(false);
+  const [checkPermission, setCheckPermission] = useState({});
   const [showCreate, setShowCreate] = useState(false);
   const [filters, setFilters] = useState({
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
   const exportCSV = useRef(null);
   const toast = useRef(null);
+
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af6dc0a7446ecd60582c7"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const mutationCreate = userMutationHook((data) =>
     SupplierService.createSupplier(data)
@@ -183,14 +198,14 @@ function SupplierIngredient() {
             severity="info"
             aria-label="Search"
             className="mr-2"
-            onClick={() => handleShowEdit(rowData)}
+            onClick={() => checkPermission.edit && handleShowEdit(rowData)}
           />
           <Button
             icon="pi pi-trash"
             rounded
             severity="danger"
             aria-label="Cancel"
-            onClick={() => comfirmDelete(rowData)}
+            onClick={() => checkPermission.delete && comfirmDelete(rowData)}
           />
         </div>
       </>
@@ -207,14 +222,14 @@ function SupplierIngredient() {
               icon="pi pi-plus"
               severity="success"
               className="mr-2 border-round-md font-semibold font-family"
-              onClick={() => setShowCreate(true)}
+              onClick={() => checkPermission.create && setShowCreate(true)}
             />
             <Button
               label="Delete"
               icon=" pi pi-trash"
               severity="danger"
               className="border-round-md font-semibold font-family"
-              onClick={comfirmDeleteSelect}
+              onClick={checkPermission.delete && comfirmDeleteSelect}
               disabled={disableDeleteSelect}
             />
           </div>
@@ -246,7 +261,7 @@ function SupplierIngredient() {
         <DataTable
           ref={exportCSV}
           value={listData}
-          tableStyle={{ minWidth: "50rem" }}
+          tableStyle={{ minWidth: "85rem" }}
           selection={selectedValues}
           selectionMode={null}
           filters={filters}

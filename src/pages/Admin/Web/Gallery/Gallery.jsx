@@ -19,6 +19,7 @@ import { Checkbox } from "primereact/checkbox";
 import CreateGallery from "./CreateGallery";
 import EditGallery from "./EditGallery";
 import { Dropdown } from "primereact/dropdown";
+import { useSelector } from "react-redux";
 
 function Gallery() {
   const [listData, setListData] = useState();
@@ -29,6 +30,7 @@ function Gallery() {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [deleteSellectDialog, setDeleteSellectDialog] = useState(false);
   const [disableDeleteSelect, setDisableDeleteSelect] = useState(true);
+  const [checkPermission, setCheckPermission] = useState({});
   const [loading, setLoading] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -38,6 +40,18 @@ function Gallery() {
   });
   const exportCSV = useRef(null);
   const toast = useRef(null);
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7980a7446ecd60582ef"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const onExportCSV = () => {
     exportCSV.current.exportCSV();
@@ -181,14 +195,14 @@ function Gallery() {
           severity="info"
           aria-label="Search"
           className="mr-2"
-          onClick={() => handleShowEdit(rowData)}
+          onClick={() => checkPermission.edit && handleShowEdit(rowData)}
         />
         <Button
           icon="pi pi-trash"
           rounded
           severity="danger"
           aria-label="Cancel"
-          onClick={() => comfirmDelete(rowData)}
+          onClick={() => checkPermission.delete && comfirmDelete(rowData)}
         />
       </div>
     );
@@ -206,7 +220,7 @@ function Gallery() {
       <div>
         <Checkbox
           variant="filled"
-          onChange={() => handleShowData(rowData)}
+          onChange={() => checkPermission.edit && handleShowData(rowData)}
           checked={rowData.show}
           pt={{
             icon: "text-white",
@@ -227,7 +241,7 @@ function Gallery() {
                 icon="pi pi-plus"
                 severity="success"
                 className="mr-2 border-round-md font-semibold font-family"
-                onClick={() => setShowCreate(true)}
+                onClick={() => checkPermission.create && setShowCreate(true)}
               />
               <Button
                 label="Delete"
@@ -235,7 +249,7 @@ function Gallery() {
                 severity="danger"
                 className=" border-round-md font-semibold font-family"
                 disabled={disableDeleteSelect}
-                onClick={comfirmDeleteSelect}
+                onClick={checkPermission.delete && comfirmDeleteSelect}
               />
             </div>
             <div>

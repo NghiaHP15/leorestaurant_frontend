@@ -15,6 +15,7 @@ import { userMutationHook } from "../../../hooks/useMutationHook";
 import LoadingTable from "../../../components/Loading/LoadingTable";
 import CreateRole from "./CreateRole";
 import { OverlayPanel } from "primereact/overlaypanel";
+import { useSelector } from "react-redux";
 
 function ListRole() {
   const [nameFilterValue, setNameFilterValue] = useState("");
@@ -24,6 +25,7 @@ function ListRole() {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [disableDeleteSelect, setDisableDeleteSelect] = useState(true);
   const [deleteSellectDialog, setDeleteSellectDialog] = useState(false);
+  const [checkPermission, setCheckPermission] = useState({});
   const [loading, setLoading] = useState(false);
   const exportCSV = useRef(null);
   const toast = useRef(null);
@@ -32,6 +34,19 @@ function ListRole() {
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     code: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
+
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7800a7446ecd60582e4"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const mutationCreate = userMutationHook((data) =>
     RoleService.createRole(data)
@@ -196,7 +211,7 @@ function ListRole() {
             rounded
             severity="danger"
             aria-label="Cancel"
-            onClick={() => comfirmDelete(rowData)}
+            onClick={() => checkPermission.delete && comfirmDelete(rowData)}
           />
         </div>
       </>
@@ -213,14 +228,16 @@ function ListRole() {
               icon="pi pi-plus"
               severity="success"
               className="mr-2 border-round-md font-semibold font-family"
-              onClick={(e) => create.current.toggle(e)}
+              onClick={(e) =>
+                checkPermission.create && create.current.toggle(e)
+              }
             />
             <Button
               label="Delete"
               icon=" pi pi-trash"
               severity="danger"
               className="border-round-md font-semibold font-family"
-              onClick={comfirmDeleteSelect}
+              onClick={checkPermission.delete && comfirmDeleteSelect}
               disabled={disableDeleteSelect}
             />
           </div>
@@ -278,7 +295,7 @@ function ListRole() {
           <Column
             field="description"
             header="Mô tả"
-            editor={(options) => textEditor(options)}
+            editor={(options) => checkPermission.edit && textEditor(options)}
             body={loading && <Skeleton />}
           ></Column>
           <Column

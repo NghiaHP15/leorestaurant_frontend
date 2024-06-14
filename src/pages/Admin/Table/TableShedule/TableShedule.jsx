@@ -27,6 +27,7 @@ import {
   formatInt,
   formatTime,
 } from "../../../../hooks/useFormat";
+import { useSelector } from "react-redux";
 
 const dataBill = {
   booking: "",
@@ -35,7 +36,7 @@ const dataBill = {
   name_staff: "",
 };
 
-const ItemTemplate = ({ product, confirmDelete, mutation }) => {
+const ItemTemplate = ({ product, confirmDelete, mutation, permission }) => {
   const menu = useRef(null);
   const navigator = useNavigate();
 
@@ -143,7 +144,9 @@ const ItemTemplate = ({ product, confirmDelete, mutation }) => {
               <ul className="list-none p-0 m-0 font-family">
                 <li
                   className="py-2 px-3 hover:surface-100"
-                  onClick={() => handleSelectTable(product._id)}
+                  onClick={() =>
+                    permission.edit && handleSelectTable(product._id)
+                  }
                 >
                   <span>
                     <i className="pi pi-arrow-right-arrow-left mr-2 text-green-400"></i>
@@ -152,7 +155,9 @@ const ItemTemplate = ({ product, confirmDelete, mutation }) => {
                 </li>
                 <li
                   className="py-2 px-3 hover:surface-100"
-                  onClick={() => handleSelectItem(product._id)}
+                  onClick={() =>
+                    permission.edit && handleSelectItem(product._id)
+                  }
                 >
                   <span>
                     <i className="pi pi-plus mr-2 text-blue-400"></i>Chọn món
@@ -160,7 +165,7 @@ const ItemTemplate = ({ product, confirmDelete, mutation }) => {
                 </li>
                 <li
                   className="py-2 px-3 hover:surface-100"
-                  onClick={() => confirmDelete(product)}
+                  onClick={() => permission.delete && confirmDelete(product)}
                 >
                   <span>
                     <i className="pi pi-times mr-2 text-red-500"></i>Hủy bàn
@@ -172,7 +177,7 @@ const ItemTemplate = ({ product, confirmDelete, mutation }) => {
           <div className="w-8 align-items-center flex justify-content-center">
             <span
               className="text-white cursor-pointer"
-              onClick={() => handleAddBill(product)}
+              onClick={() => permission.edit && handleAddBill(product)}
             >
               Khách nhận bàn
             </span>
@@ -191,12 +196,25 @@ function TableSchedule() {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [value, setValue] = useState("");
   const toast = useRef(null);
+  const [checkPermission, setCheckPermission] = useState({});
   const navigator = useNavigate();
   const sortOptions = [
     { label: "Sắp xếp tăng dần", value: "!table" },
     { label: "Sắp xếp giảm dần", value: "table" },
     { label: "Mặc định", value: "" },
   ];
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af6dc0a7446ecd60582c7"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const mutation = userMutationHook((data) =>
     BookingService.editBooking(data._id, data)
@@ -266,6 +284,7 @@ function TableSchedule() {
           key={index}
           confirmDelete={comfirmDelete}
           mutation={mutation}
+          permission={checkPermission}
         />
       );
     });
@@ -279,7 +298,11 @@ function TableSchedule() {
           label="Thêm đặt bàn"
           severity="info"
           icon="pi pi-plus"
-          onClick={() => navigator(config.router.createTableSchedule)}
+          onClick={() =>
+            navigator(
+              checkPermission.create && config.router.createTableSchedule
+            )
+          }
         />
         <Dropdown
           options={sortOptions}

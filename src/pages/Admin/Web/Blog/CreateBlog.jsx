@@ -85,6 +85,12 @@ export default function CreateBlog() {
     setError(_error);
   };
 
+  const categoryBlog = [
+    { name: "Bài viết cộng đồng" },
+    { name: "Bài viết khuyến mãi" },
+    { name: "Bài viết đánh giá" },
+  ];
+
   /// Change Input
   const handleChangeInputText = (event) => {
     const { value, name } = event.target;
@@ -232,25 +238,45 @@ export default function CreateBlog() {
                     htmlFor="customer"
                     className="text-900 font-bold font-family text-color-secondary"
                   >
-                    Khách hàng
+                    Danh mục bài viết
                   </label>
                   <Dropdown
-                    value={dataBlog.customer}
-                    options={customer}
+                    placeholder="Chọn danh mục"
+                    options={categoryBlog}
+                    value={dataBlog.categoryBlog}
+                    optionValue="name"
                     optionLabel="name"
-                    optionValue="_id"
-                    placeholder="--- Chọn khách hàng ---"
-                    filter
-                    onChange={(e) => handleChangeInput(e, "customer")}
-                    className={error.customer ? "p-invalid" : ""}
+                    onChange={(e) => handleChangeInput(e, "categoryBlog")}
                     pt={{
-                      root: "h-3rem w-full align-items-center border-round-lg mt-2",
+                      root: "h-3rem w-full align-items-center border-round-lg ",
                       input: "font-family",
+                      wrapper: "border-round-lg",
                       item: "font-family hover:surface-100 px-4 py-3",
-                      list: "p-0 ",
+                      list: "p-0 border-round-lg",
                     }}
                   />
-                  {getFormErrorMessage(error, "customer")}
+                  {getFormErrorMessage(error, "category")}
+                </div>
+                <div className="col-12">
+                  <label
+                    htmlFor="description"
+                    className="text-900 font-bold font-family text-color-secondary"
+                  >
+                    Danh mục bài viết
+                  </label>
+                  <Dropdown
+                    placeholder="Mô tả"
+                    name="description"
+                    id="description"
+                    value={dataBlog.description}
+                    onChange={(e) => handleChangeInputText(e, "description")}
+                    rows={5}
+                    cols={30}
+                    pt={{
+                      root: "font-family border-round-lg mt-2 w-full",
+                    }}
+                  />
+                  {getFormErrorMessage(error, "name")}
                 </div>
                 <div className="col-12">
                   <label

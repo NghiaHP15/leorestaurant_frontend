@@ -18,6 +18,7 @@ import { Dropdown } from "primereact/dropdown";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { InputSwitch } from "primereact/inputswitch";
 import classNames from "classnames/bind";
+import { useSelector } from "react-redux";
 const cx = classNames.bind();
 
 const defaltvalue = {
@@ -54,6 +55,7 @@ function ListUser() {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [disableDeleteSelect, setDisableDeleteSelect] = useState(true);
   const [deleteSellectDialog, setDeleteSellectDialog] = useState(false);
+  const [checkPermission, setCheckPermission] = useState({});
   const [loading, setLoading] = useState(false);
   const exportCSV = useRef(null);
   const toast = useRef(null);
@@ -61,6 +63,19 @@ function ListUser() {
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     code: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
+
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7800a7446ecd60582e4"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const mutationCreate = userMutationHook((data) =>
     UserService.createUser(data)
@@ -385,7 +400,7 @@ function ListUser() {
             rounded
             severity="danger"
             aria-label="Cancel"
-            onClick={() => comfirmDelete(rowData)}
+            onClick={() => checkPermission.delete && comfirmDelete(rowData)}
           />
         </div>
       </>
@@ -417,7 +432,7 @@ function ListUser() {
                   icon=" pi pi-trash"
                   severity="danger"
                   className="border-round-md font-semibold font-family"
-                  onClick={comfirmDeleteSelect}
+                  onClick={checkPermission.delete && comfirmDeleteSelect}
                   disabled={disableDeleteSelect}
                 />
               </div>
@@ -492,7 +507,9 @@ function ListUser() {
                 <Column
                   field="status"
                   header="Trạng thái"
-                  editor={(options) => statusEditor(options)}
+                  editor={(options) =>
+                    checkPermission.edit && statusEditor(options)
+                  }
                   body={(loading && <Skeleton />) || statusBodyTemplate}
                 ></Column>
                 <Column
@@ -736,7 +753,7 @@ function ListUser() {
                 severity="success"
                 loading={isPendingCreate}
                 className="ml-3 h-3rem px-5 border-round-md font-semibold font-family"
-                onClick={confirmSave}
+                onClick={checkPermission.create && confirmSave}
               />
               <Button
                 label="Hủy"

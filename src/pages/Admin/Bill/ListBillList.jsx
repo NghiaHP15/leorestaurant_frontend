@@ -97,13 +97,7 @@ function ListBillList() {
     return <span>{rowData.cancel.reason || "Lý do khác"}</span>;
   };
   const templateTotal = (rowData) => {
-    return (
-      <span>
-        {formatCurrency(
-          rowData.booking.priceSale - (rowData.booking.priceSell || 0) + " VND"
-        )}
-      </span>
-    );
+    return <span>{formatCurrency(rowData.total || 0) + " VND"}</span>;
   };
 
   const templateStatus = (rowData) => {

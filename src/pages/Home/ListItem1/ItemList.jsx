@@ -29,9 +29,19 @@ function ItemList({ data }) {
         >
           {data.name}
         </span>
-        <span className={cx("text-xl font-semibold text-700")}>
+        <span
+          className={cx(
+            "text-lg font-semibold text-700 ",
+            data.priceSell && "line-through"
+          )}
+        >
           {formatCurrency(data.priceSale) + "đ"}
         </span>
+        {data.priceSell && (
+          <span className={cx("text-lg font-semibold text-700 text-red-400")}>
+            {formatCurrency(data.priceSell) + "đ"}
+          </span>
+        )}
       </div>
     </div>
   );

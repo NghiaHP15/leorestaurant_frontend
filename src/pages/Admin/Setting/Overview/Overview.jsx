@@ -2,6 +2,8 @@ import { Avatar } from "primereact/avatar";
 import images from "../../../../assets/images";
 import config from "../../../../config";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const data = [
   {
@@ -42,10 +44,10 @@ const data = [
   },
 ];
 
-const ItemTemplate = ({ data }) => {
+const ItemTemplate = ({ data, permission }) => {
   return (
     <div className="col-4">
-      <Link to={data.path} className="no-underline">
+      <Link to={permission.edit && data.path} className="no-underline">
         <div className="p-4 border-300 border-1 border-round-md hover:surface-50">
           <div className="flex justify-content-between align-items-center">
             <div className="flex flex-column font-family ">
@@ -69,10 +71,25 @@ const ItemTemplate = ({ data }) => {
 };
 
 function Overview() {
+  const [checkPermission, setCheckPermission] = useState({});
+
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7800a7446ecd60582e4"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
+
   return (
     <div className="grid mt-4 p-5 shadow-2 bg-white border-round-xl">
       {data.map((item, index) => (
-        <ItemTemplate data={item} key={index} />
+        <ItemTemplate data={item} key={index} permission={checkPermission} />
       ))}
     </div>
   );

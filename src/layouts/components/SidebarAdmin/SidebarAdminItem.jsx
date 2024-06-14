@@ -4,15 +4,17 @@ import styles from "./SidebarAdmin.module.scss";
 import classNames from "classnames/bind";
 import { useClickOutside } from "primereact/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUtensils } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 const cx = classNames.bind(styles);
 
 const MenuItem = ({ data, visible, submenu }, ref) => {
   const [show, setShow] = useState(false);
-  const [active, setActive] = useState(false);
   const overlayRef = useRef(null);
   const overlayItemRef = useRef(null);
+  const [check, setCheck] = useState(false);
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
 
   useClickOutside(overlayRef, () => {
     setShow(false);
@@ -22,13 +24,25 @@ const MenuItem = ({ data, visible, submenu }, ref) => {
     setShow(!show);
   };
 
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.some(
+        (item) =>
+          item.function_id === data?.permission ||
+          data?.permission === "default"
+      );
+      setCheck(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.permission]);
+
   return (
     <>
       {data.items && data.items.length !== 0 ? (
         <li ref={overlayRef} className={cx(show && `active-menuitem`)}>
           <Link
             onClick={(event) => handleMenuItem(event)}
-            to={data.path}
+            to={check && data.path}
             ref={overlayItemRef}
             className={cx(
               "border-round-lg p-ripple flex align-items-center cursor-pointer p-3 pl-4 text-700 hover:bg-orange-100 no-underline"
@@ -77,7 +91,7 @@ const MenuItem = ({ data, visible, submenu }, ref) => {
         <li>
           <Link
             onClick={(event) => handleMenuItem(event)}
-            to={data.path}
+            to={check && data.path}
             className={cx(
               submenu && "pl-6",
               "border-round-lg p-ripple flex align-items-center cursor-pointer p-3 pl-4 text-700 hover:bg-orange-100 transition-duration-150 transition-colors no-underline"

@@ -16,6 +16,7 @@ import * as StaffService from "../../../services/StaffService";
 import LoadingTable from "../../../components/Loading/LoadingTable";
 import { userMutationHook } from "../../../hooks/useMutationHook";
 import { Skeleton } from "primereact/skeleton";
+import { useSelector } from "react-redux";
 
 function ListEmployee() {
   const [listData, setListData] = useState();
@@ -26,6 +27,7 @@ function ListEmployee() {
   const [deleteSellectDialog, setDeleteSellectDialog] = useState(false);
   const [disableDeleteSelect, setDisableDeleteSelect] = useState(true);
   const [expandedRows, setExpandedRows] = useState(null);
+  const [checkPermission, setCheckPermission] = useState({});
   const [loading, setLoading] = useState([]);
   const navigator = useNavigate();
   const [filters, setFilters] = useState({
@@ -33,8 +35,21 @@ function ListEmployee() {
     email: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     phone: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
+
   const exportCSV = useRef(null);
   const toast = useRef(null);
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7800a7446ecd60582e4"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const onExportCSV = () => {
     exportCSV.current.exportCSV();
@@ -161,7 +176,7 @@ function ListEmployee() {
           severity="success"
           aria-label="Search"
           className="mr-2"
-          onClick={() => handleProfileClick(rowData)}
+          onClick={() => checkPermission.edit && handleProfileClick(rowData)}
         />
         <Button
           icon="pi pi pi-pencil"
@@ -169,14 +184,14 @@ function ListEmployee() {
           severity="info"
           aria-label="Search"
           className="mr-2"
-          onClick={() => handleEditClick(rowData)}
+          onClick={() => checkPermission.edit && handleEditClick(rowData)}
         />
         <Button
           icon="pi pi-trash"
           rounded
           severity="danger"
           aria-label="Cancel"
-          onClick={() => comfirmDelete(rowData)}
+          onClick={() => checkPermission.delete && comfirmDelete(rowData)}
         />
       </div>
     );
@@ -193,7 +208,10 @@ function ListEmployee() {
                 icon="pi pi-plus"
                 severity="success"
                 className="mr-2 border-round-md font-semibold font-family"
-                onClick={() => navigator(config.router.createEmployee)}
+                onClick={() =>
+                  checkPermission.create &&
+                  navigator(config.router.createEmployee)
+                }
               />
               <Button
                 label="Delete"
@@ -201,7 +219,7 @@ function ListEmployee() {
                 severity="danger"
                 className=" border-round-md font-semibold font-family"
                 disabled={disableDeleteSelect}
-                onClick={comfirmDeleteSelect}
+                onClick={checkPermission.delete && comfirmDeleteSelect}
               />
             </div>
             <div>
@@ -235,7 +253,6 @@ function ListEmployee() {
             globalFilterFields={["name"]}
             expandedRows={expandedRows}
             onRowToggle={(e) => setExpandedRows(e.data)}
-            // rowExpansionTemplate={rowExpansionTemplate}
             onSelectionChange={handleSelectValues}
             dataKey="_id"
             className="font-family"
@@ -245,7 +262,6 @@ function ListEmployee() {
             rowsPerPageOptions={[5, 10, 25, 50]}
           >
             <Column selectionMode="multiple" style={{ width: "3rem" }}></Column>
-            {/* <Column header="" expander={allowExpansion}></Column> */}
             <Column
               field="name"
               header="Tên nhân viên"

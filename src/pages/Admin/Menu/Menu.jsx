@@ -17,6 +17,7 @@ import LoadingTable from "../../../components/Loading/LoadingTable";
 import { userMutationHook } from "../../../hooks/useMutationHook";
 import { Skeleton } from "primereact/skeleton";
 import { Image } from "primereact/image";
+import { useSelector } from "react-redux";
 
 function Menu() {
   const [listData, setListData] = useState();
@@ -27,12 +28,25 @@ function Menu() {
   const [deleteSellectDialog, setDeleteSellectDialog] = useState(false);
   const [disableDeleteSelect, setDisableDeleteSelect] = useState(true);
   const [loading, setLoading] = useState([]);
+  const [checkPermission, setCheckPermission] = useState({});
   const navigator = useNavigate();
   const [filters, setFilters] = useState({
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
   const exportCSV = useRef(null);
   const toast = useRef(null);
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7440a7446ecd60582d5"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const onExportCSV = () => {
     exportCSV.current.exportCSV();
@@ -154,14 +168,14 @@ function Menu() {
           severity="info"
           aria-label="Search"
           className="mr-2"
-          onClick={() => handleViewClick(rowData)}
+          onClick={() => checkPermission.edit && handleViewClick(rowData)}
         />
         <Button
           icon="pi pi-trash"
           rounded
           severity="danger"
           aria-label="Cancel"
-          onClick={() => comfirmDelete(rowData)}
+          onClick={() => checkPermission.delete && comfirmDelete(rowData)}
         />
       </div>
     );
@@ -178,7 +192,9 @@ function Menu() {
                 icon="pi pi-plus"
                 severity="success"
                 className="mr-2 border-round-md font-semibold font-family"
-                onClick={() => navigator(config.router.createMenu)}
+                onClick={() =>
+                  checkPermission.create && navigator(config.router.createMenu)
+                }
               />
               <Button
                 label="Delete"
@@ -186,7 +202,7 @@ function Menu() {
                 severity="danger"
                 className=" border-round-md font-semibold font-family"
                 disabled={disableDeleteSelect}
-                onClick={comfirmDeleteSelect}
+                onClick={checkPermission.delete && comfirmDeleteSelect}
               />
             </div>
             <div>

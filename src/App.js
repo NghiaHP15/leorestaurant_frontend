@@ -1,5 +1,10 @@
 import { Fragment, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import { RoutesPath } from "./routes/routes";
 import { DefaultLayout } from "./layouts";
 import "./App.css";
@@ -15,6 +20,7 @@ import MobiePage from "./pages/Client/MobiePage";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function || null;
 
   useEffect(() => {
     const { storageData, decoded } = handleDecoded("access_token");
@@ -80,15 +86,32 @@ function App() {
       <div className="app">
         <Routes>
           {RoutesPath.map((route, index) => {
-            const Page = route.component;
+            let path;
+            let Page = route.component;
             let Layout = DefaultLayout;
             const isCheckAuth = !route.isPrivate || user.isAdmin;
-            const path = isCheckAuth ? route.path : "";
+            const isCheckPermission =
+              userPermission &&
+              userPermission.some(
+                (item) =>
+                  item.function_id === route.permission ||
+                  route.permission === "default"
+              );
+            path = isCheckAuth ? route.path : "";
+            if (route.isPrivate) {
+              if (route.permission === "admindefault") {
+                path = isCheckAuth ? route.path : "";
+              } else {
+                path = isCheckPermission ? route.path : "";
+              }
+            }
+            // path = isCheckPermission ? route.path : "";
             if (route.layout) {
               Layout = route.layout;
             } else if (route.layout === null) {
               Layout = Fragment;
             }
+
             return (
               <Route
                 path={path}

@@ -19,6 +19,7 @@ import { InputText } from "primereact/inputtext";
 import config from "../../../../config";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../../../hooks/useFormat";
+import { useSelector } from "react-redux";
 
 function Blog() {
   const [listData, setListData] = useState();
@@ -28,6 +29,7 @@ function Blog() {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [deleteSellectDialog, setDeleteSellectDialog] = useState(false);
   const [disableDeleteSelect, setDisableDeleteSelect] = useState(true);
+  const [checkPermission, setCheckPermission] = useState({});
   const [loading, setLoading] = useState([]);
   const [filters, setFilters] = useState({
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -35,6 +37,18 @@ function Blog() {
   const exportCSV = useRef(null);
   const toast = useRef(null);
   const navigator = useNavigate();
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7980a7446ecd60582ef"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const onExportCSV = () => {
     exportCSV.current.exportCSV();
@@ -179,14 +193,14 @@ function Blog() {
           severity="info"
           aria-label="Search"
           className="mr-2"
-          onClick={() => handleShowEdit(rowData)}
+          onClick={() => checkPermission.edit && handleShowEdit(rowData)}
         />
         <Button
           icon="pi pi-trash"
           rounded
           severity="danger"
           aria-label="Cancel"
-          onClick={() => comfirmDelete(rowData)}
+          onClick={() => checkPermission.edit && comfirmDelete(rowData)}
         />
       </div>
     );
@@ -204,7 +218,9 @@ function Blog() {
       <div>
         <Checkbox
           variant="filled"
-          onChange={() => handleShowData(rowData, "popular")}
+          onChange={() =>
+            checkPermission.edit && handleShowData(rowData, "popular")
+          }
           checked={rowData.popular}
           pt={{
             icon: "text-white",
@@ -219,7 +235,9 @@ function Blog() {
       <div>
         <Checkbox
           variant="filled"
-          onChange={() => handleShowData(rowData, "show")}
+          onChange={() =>
+            checkPermission.edit && handleShowData(rowData, "show")
+          }
           checked={rowData.show}
           pt={{
             icon: "text-white",
@@ -240,7 +258,9 @@ function Blog() {
                 icon="pi pi-plus"
                 severity="success"
                 className="mr-2 border-round-md font-semibold font-family"
-                onClick={() => navigator(config.router.createBlog)}
+                onClick={() =>
+                  checkPermission.create && navigator(config.router.createBlog)
+                }
               />
               <Button
                 label="Xóa bài viết"
@@ -248,7 +268,7 @@ function Blog() {
                 severity="danger"
                 className=" border-round-md font-semibold font-family"
                 disabled={disableDeleteSelect}
-                onClick={comfirmDeleteSelect}
+                onClick={checkPermission.delete && comfirmDeleteSelect}
               />
             </div>
             <div>

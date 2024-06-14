@@ -397,13 +397,18 @@ function Detail() {
                     </div>
                     <div className="flex justify-content-between mb-2">
                       <span className="text-color-secondary font-medium">
+                        Dich vụ
+                      </span>
+                      <span className=" font-medium">
+                        {formatCurrency(dataBill.servicePrice || 0) + " %"}
+                      </span>
+                    </div>
+                    <div className="flex justify-content-between mb-2">
+                      <span className="text-color-secondary font-medium">
                         Thành tiền
                       </span>
                       <span className=" font-medium">
-                        {formatCurrency(
-                          dataBill.booking?.priceSale -
-                            dataBill.booking?.priceSell || 0
-                        ) + " VND"}
+                        {formatCurrency(dataBill.total || 0) + " VND"}
                       </span>
                     </div>
                     <div className="flex justify-content-between flex-wrap border-top-2 border-200 pt-3">
@@ -414,10 +419,7 @@ function Detail() {
                         </span>
                       </div>
                       <span className="text-red-500 text-xl font-medium">
-                        {formatCurrency(
-                          dataBill.booking?.priceSale -
-                            dataBill.booking?.priceSell || 0
-                        ) + " VND"}
+                        {formatCurrency(dataBill.total || 0) + " VND"}
                       </span>
                     </div>
                   </div>

@@ -15,6 +15,7 @@ import { userMutationHook } from "../../../../hooks/useMutationHook";
 import LoadingTable from "../../../../components/Loading/LoadingTable";
 import CreateCategoryDish from "./CreateCategoryDish";
 import { OverlayPanel } from "primereact/overlaypanel";
+import { useSelector } from "react-redux";
 
 function ListCategoryIngredient() {
   const [nameFilterValue, setNameFilterValue] = useState("");
@@ -24,6 +25,7 @@ function ListCategoryIngredient() {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [disableDeleteSelect, setDisableDeleteSelect] = useState(true);
   const [deleteSellectDialog, setDeleteSellectDialog] = useState(false);
+  const [checkPermission, setCheckPermission] = useState({});
   const [loading, setLoading] = useState(false);
   const exportCSV = useRef(null);
   const create = useRef(null);
@@ -31,6 +33,18 @@ function ListCategoryIngredient() {
   const [filters, setFilters] = useState({
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
+  const user = useSelector((state) => state.user);
+  const userPermission = user?.user?.permission?.function;
+
+  useEffect(() => {
+    if (userPermission) {
+      const check = userPermission.find(
+        (item) => item.function_id === "666af7320a7446ecd60582d1"
+      );
+      setCheckPermission(check);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userPermission]);
 
   const mutationCreate = userMutationHook((data) =>
     CategoryFood.createCategoryFood(data)
@@ -195,7 +209,7 @@ function ListCategoryIngredient() {
             rounded
             severity="danger"
             aria-label="Cancel"
-            onClick={() => comfirmDelete(rowData)}
+            onClick={() => checkPermission.delete && comfirmDelete(rowData)}
           />
         </div>
       </>
@@ -212,14 +226,14 @@ function ListCategoryIngredient() {
               icon="pi pi-plus"
               severity="success"
               className="mr-2 border-round-md font-semibold font-family"
-              onClick={(e) => create.current.show(e)}
+              onClick={(e) => checkPermission.create && create.current.show(e)}
             />
             <Button
               label="Delete"
               icon=" pi pi-trash"
               severity="danger"
               className="border-round-md font-semibold font-family"
-              onClick={comfirmDeleteSelect}
+              onClick={checkPermission.delete && comfirmDeleteSelect}
               disabled={disableDeleteSelect}
             />
           </div>
@@ -283,7 +297,7 @@ function ListCategoryIngredient() {
             body={loading && <Skeleton />}
           ></Column>
           <Column
-            rowEditor={allowEdit}
+            rowEditor={checkPermission.edit && allowEdit}
             headerStyle={{ width: "7rem", minWidth: "1rem" }}
             bodyStyle={{ textAlign: "end" }}
             body={loading && <Skeleton />}

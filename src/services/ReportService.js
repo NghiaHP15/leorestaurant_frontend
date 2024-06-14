@@ -131,3 +131,15 @@ export const getReport = async () => {
     throw error;
   }
 };
+
+export const getReportDay = async () => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/report/get-report-day`
+    );
+    return res.data;
+  } catch (error) {
+    console.log("Lỗi lấy thông tin xuất báo cáo", error);
+    throw error;
+  }
+};

@@ -57,6 +57,8 @@ import CreateBlog from "../pages/Admin/Web/Blog/CreateBlog";
 import EditBlog from "../pages/Admin/Web/Blog/EditBlog";
 import Infor from "../pages/Admin/Setting/Infor";
 import MobiePage from "../pages/Client/MobiePage";
+import Permission from "../pages/Admin/Permission";
+import ListPermission from "../pages/Admin/Permission/ListPermission";
 
 const RoutesPath = [
   {
@@ -64,47 +66,55 @@ const RoutesPath = [
     component: MobiePage,
     path: config.router.mobiePage,
     layout: null,
+    permission: "default",
   },
   {
     name: "Trang chủ",
     component: Home,
     path: config.router.home,
+    permission: "default",
   },
   {
     name: "Trang giới thiệu",
     component: AboutsPage,
     path: config.router.aboutPage,
     layout: ContentLayout,
+    permission: "default",
   },
   {
     name: "Trang thực đơn",
     component: MenuPage,
     path: config.router.menuPage,
     layout: ContentLayout,
+    permission: "default",
   },
   {
     name: "Trang món ăn",
     component: MenuItem,
     path: config.router.menuItem,
     layout: ContentLayout,
+    permission: "default",
   },
   {
     name: "Trang hình ảnh",
     component: ImagePage,
     path: config.router.imagePage,
     layout: ContentLayout,
+    permission: "default",
   },
   {
     name: "Trang bài viết",
     component: BlogPage,
     path: config.router.blogPage,
     layout: ContentLayout,
+    permission: "default",
   },
   {
     name: "Trang liên hệ",
     component: ContactPage,
     path: config.router.contactPage,
     layout: ContentLayout,
+    permission: "default",
   },
   {
     name: "Danh sách slide",
@@ -112,6 +122,7 @@ const RoutesPath = [
     path: config.router.slider,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7980a7446ecd60582ef",
   },
   {
     name: "Danh sách bộ sưu tập",
@@ -119,6 +130,7 @@ const RoutesPath = [
     path: config.router.gallery,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7980a7446ecd60582ef",
   },
   {
     name: "Danh sách bài viết",
@@ -126,6 +138,7 @@ const RoutesPath = [
     path: config.router.blog,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7980a7446ecd60582ef",
   },
   {
     name: "Tạo bài viết",
@@ -133,6 +146,7 @@ const RoutesPath = [
     path: config.router.createBlog,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7980a7446ecd60582ef",
   },
   {
     name: "Sửa bài viết",
@@ -140,6 +154,7 @@ const RoutesPath = [
     path: config.router.editBlog,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7980a7446ecd60582ef",
   },
   {
     name: "Admin",
@@ -147,6 +162,7 @@ const RoutesPath = [
     path: config.router.admin,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "admindefault",
   },
   {
     name: "Đơn hàng",
@@ -154,6 +170,7 @@ const RoutesPath = [
     path: config.router.manageOrder,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7230a7446ecd60582cc",
   },
   {
     name: "Danh sách đơn hàng",
@@ -161,6 +178,7 @@ const RoutesPath = [
     path: config.router.manageListOrder,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7230a7446ecd60582cc",
   },
   {
     name: "Danh sách thực đơn",
@@ -168,6 +186,7 @@ const RoutesPath = [
     path: config.router.listProduct,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7440a7446ecd60582d5",
   },
   {
     name: "Danh sách nhân viên",
@@ -175,6 +194,7 @@ const RoutesPath = [
     path: config.router.listEmployee,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7800a7446ecd60582e4",
   },
   {
     name: "Thêm mới nhân viên",
@@ -182,6 +202,7 @@ const RoutesPath = [
     path: config.router.createEmployee,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7800a7446ecd60582e4",
   },
   {
     name: "Chỉnh sửa thông tin nhân viên",
@@ -189,6 +210,7 @@ const RoutesPath = [
     path: config.router.editEmployee,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7800a7446ecd60582e4",
   },
   {
     name: "Thông tin nhân viên",
@@ -196,6 +218,7 @@ const RoutesPath = [
     path: config.router.profileEmployee,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7800a7446ecd60582e4",
   },
   {
     name: "Thông tin người dùng",
@@ -203,6 +226,7 @@ const RoutesPath = [
     path: config.router.profileUser,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7800a7446ecd60582e4",
   },
   {
     name: "Danh sách chức vụ",
@@ -210,6 +234,7 @@ const RoutesPath = [
     path: config.router.listRole,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7800a7446ecd60582e4",
   },
   {
     name: "Danh sách User",
@@ -217,6 +242,7 @@ const RoutesPath = [
     path: config.router.listUser,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7800a7446ecd60582e4",
   },
   {
     name: "Nguyên liệu",
@@ -224,6 +250,7 @@ const RoutesPath = [
     path: config.router.ingredient,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Danh mục nguyên liệu",
@@ -231,6 +258,7 @@ const RoutesPath = [
     path: config.router.categoryIngredient,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Quản lý nhà cung cấp",
@@ -238,6 +266,7 @@ const RoutesPath = [
     path: config.router.supplierIngredient,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Danh sách công thức món",
@@ -245,6 +274,7 @@ const RoutesPath = [
     path: config.router.recipe,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7320a7446ecd60582d1",
   },
   {
     name: "Tạo công thức món",
@@ -252,6 +282,7 @@ const RoutesPath = [
     path: config.router.createRecipe,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7320a7446ecd60582d1",
   },
   {
     name: "Sửa công thức món",
@@ -259,6 +290,7 @@ const RoutesPath = [
     path: config.router.editRecipe,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7320a7446ecd60582d1",
   },
   {
     name: "Danh mục món",
@@ -266,6 +298,7 @@ const RoutesPath = [
     path: config.router.categoryFood,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7320a7446ecd60582d1",
   },
   {
     name: "Danh sách thực đơn",
@@ -273,6 +306,7 @@ const RoutesPath = [
     path: config.router.menu,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7440a7446ecd60582d5",
   },
   {
     name: "Tạo thực đơn",
@@ -280,6 +314,7 @@ const RoutesPath = [
     path: config.router.createMenu,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7440a7446ecd60582d5",
   },
   {
     name: "Xem thực đơn",
@@ -287,6 +322,7 @@ const RoutesPath = [
     path: config.router.viewMenu,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7440a7446ecd60582d5",
   },
   {
     name: "Danh sách combo",
@@ -294,6 +330,7 @@ const RoutesPath = [
     path: config.router.combo,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7500a7446ecd60582da",
   },
   {
     name: "Tạo combo",
@@ -301,6 +338,7 @@ const RoutesPath = [
     path: config.router.createCombo,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7500a7446ecd60582da",
   },
   {
     name: "Xem combo",
@@ -308,6 +346,7 @@ const RoutesPath = [
     path: config.router.viewCombo,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7500a7446ecd60582da",
   },
   {
     name: "Sơ đồ bàn",
@@ -315,6 +354,7 @@ const RoutesPath = [
     path: config.router.table,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Lịch đặt bàn",
@@ -322,6 +362,7 @@ const RoutesPath = [
     path: config.router.tableSchedule,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Danh sách đặt bàn",
@@ -329,6 +370,7 @@ const RoutesPath = [
     path: config.router.tableList,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Chi tiết đặt bàn",
@@ -336,6 +378,7 @@ const RoutesPath = [
     path: config.router.tableDetail,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Thêm lịch đặt bàn",
@@ -343,6 +386,7 @@ const RoutesPath = [
     path: config.router.createTableSchedule,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Chọn món",
@@ -350,6 +394,7 @@ const RoutesPath = [
     path: config.router.tableSelectItem,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Chọn món",
@@ -357,6 +402,7 @@ const RoutesPath = [
     path: config.router.billSelectItem,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7230a7446ecd60582cc",
   },
   {
     name: "Chọn bàn",
@@ -364,6 +410,7 @@ const RoutesPath = [
     path: config.router.tableSelectTable,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af68b0a7446ecd60582a7",
   },
   {
     name: "Danh khách nhận bàn",
@@ -371,6 +418,7 @@ const RoutesPath = [
     path: config.router.listBill,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7230a7446ecd60582cc",
   },
   {
     name: "Danh sách đơn hàng",
@@ -378,6 +426,7 @@ const RoutesPath = [
     path: config.router.listBillList,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7230a7446ecd60582cc",
   },
   {
     name: "Chi tiết đơn hàng",
@@ -385,20 +434,23 @@ const RoutesPath = [
     path: config.router.detailBill,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7230a7446ecd60582cc",
   },
-  {
-    name: "Chọn món",
-    component: SelectItem,
-    path: config.router.billSelectItem,
-    layout: AdminLayout,
-    isPrivate: true,
-  },
+  // {
+  //   name: "Chọn món",
+  //   component: SelectItem,
+  //   path: config.router.billSelectItem,
+  //   layout: AdminLayout,
+  //   isPrivate: true,
+  //   permission: "666af7230a7446ecd60582cc",
+  // },
   {
     name: "Chuyển bàn",
     component: SelectTable,
     path: config.router.billSelectTable,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7230a7446ecd60582cc",
   },
   {
     name: "Cài đặt",
@@ -406,6 +458,7 @@ const RoutesPath = [
     component: Overview,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7a20a7446ecd60582f4",
   },
   {
     name: "Thiết thông tin nhà hàng",
@@ -413,6 +466,7 @@ const RoutesPath = [
     component: Infor,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7a20a7446ecd60582f4",
   },
   {
     name: "Thiết lập loại bàn",
@@ -420,6 +474,7 @@ const RoutesPath = [
     component: CategoryTable,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7a20a7446ecd60582f4",
   },
   {
     name: "Thiết danh sách bàn",
@@ -427,6 +482,7 @@ const RoutesPath = [
     component: ListTable,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7a20a7446ecd60582f4",
   },
   {
     name: "Thiết lập khu vực",
@@ -434,6 +490,7 @@ const RoutesPath = [
     component: AreaTable,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7a20a7446ecd60582f4",
   },
   {
     name: "Thiết lập Banner",
@@ -441,6 +498,7 @@ const RoutesPath = [
     component: CategoryBanner,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7a20a7446ecd60582f4",
   },
   {
     name: "Thiết lập bộ sưu tập",
@@ -448,6 +506,7 @@ const RoutesPath = [
     component: CategoryGallery,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af7a20a7446ecd60582f4",
   },
   {
     name: "Khách hàng",
@@ -455,12 +514,28 @@ const RoutesPath = [
     component: Customer,
     layout: AdminLayout,
     isPrivate: true,
+    permission: "666af78a0a7446ecd60582ea",
   },
   {
     name: "Đăng ký và đăng nhập tài khoản",
     path: config.router.register,
     component: Register,
     layout: null,
+    permission: "default",
+  },
+  {
+    name: "Danh sách chức năng",
+    path: config.router.permission,
+    component: Permission,
+    layout: AdminLayout,
+    permission: "666af7800a7446ecd60582e4",
+  },
+  {
+    name: "Danh sách quyền",
+    path: config.router.listPermission,
+    component: ListPermission,
+    layout: AdminLayout,
+    permission: "666af7800a7446ecd60582e4",
   },
 ];
 
