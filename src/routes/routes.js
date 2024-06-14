@@ -354,7 +354,7 @@ const RoutesPath = [
     path: config.router.table,
     layout: AdminLayout,
     isPrivate: true,
-    permission: "666af68b0a7446ecd60582a7",
+    permission: "666af6dc0a7446ecd60582c7",
   },
   {
     name: "Lịch đặt bàn",
@@ -362,7 +362,7 @@ const RoutesPath = [
     path: config.router.tableSchedule,
     layout: AdminLayout,
     isPrivate: true,
-    permission: "666af68b0a7446ecd60582a7",
+    permission: "666af6dc0a7446ecd60582c7",
   },
   {
     name: "Danh sách đặt bàn",
@@ -370,7 +370,7 @@ const RoutesPath = [
     path: config.router.tableList,
     layout: AdminLayout,
     isPrivate: true,
-    permission: "666af68b0a7446ecd60582a7",
+    permission: "666af6dc0a7446ecd60582c7",
   },
   {
     name: "Chi tiết đặt bàn",
@@ -378,7 +378,7 @@ const RoutesPath = [
     path: config.router.tableDetail,
     layout: AdminLayout,
     isPrivate: true,
-    permission: "666af68b0a7446ecd60582a7",
+    permission: "666af6dc0a7446ecd60582c7",
   },
   {
     name: "Thêm lịch đặt bàn",
@@ -386,7 +386,7 @@ const RoutesPath = [
     path: config.router.createTableSchedule,
     layout: AdminLayout,
     isPrivate: true,
-    permission: "666af68b0a7446ecd60582a7",
+    permission: "666af6dc0a7446ecd60582c7",
   },
   {
     name: "Chọn món",
@@ -394,7 +394,7 @@ const RoutesPath = [
     path: config.router.tableSelectItem,
     layout: AdminLayout,
     isPrivate: true,
-    permission: "666af68b0a7446ecd60582a7",
+    permission: "666af6dc0a7446ecd60582c7",
   },
   {
     name: "Chọn món",
@@ -410,7 +410,7 @@ const RoutesPath = [
     path: config.router.tableSelectTable,
     layout: AdminLayout,
     isPrivate: true,
-    permission: "666af68b0a7446ecd60582a7",
+    permission: "666af6dc0a7446ecd60582c7",
   },
   {
     name: "Danh khách nhận bàn",
